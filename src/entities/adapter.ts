@@ -1,3 +1,4 @@
+import { log } from "@graphprotocol/graph-ts";
 import { Adapter } from "../../generated/schema";
 import { adapters, adaptersNames } from "../constants";
 
@@ -11,4 +12,13 @@ export function ensureAdapters(): void {
       adapter.save();
     }
   }
+}
+
+export function useAdapter(adapterAddress: string): Adapter {
+  let adapter = Adapter.load(adapterAddress) as Adapter;
+  if (adapter == null) {
+    log.critical("Adapter does not exist", []);
+  }
+
+  return adapter;
 }
