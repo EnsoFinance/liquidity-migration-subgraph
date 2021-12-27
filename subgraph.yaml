@@ -23,6 +23,8 @@ dataSources:
         - name: LiquidityMigration
           file: ./abis/LiquidityMigration.json
       eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
         - event: Staked(address,address,uint256,address)
           handler: handleStaked
       file: ./src/mapping.ts

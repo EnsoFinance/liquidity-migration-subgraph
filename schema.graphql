@@ -5,6 +5,7 @@ type LiquidityMigration @entity {
 
 type Adapter @entity {
   id: ID!
+  name: String!
   staked: Int!
 }
 
