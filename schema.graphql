@@ -1,0 +1,16 @@
+type LiquidityMigration @entity {
+  id: ID!
+  staked: Int!
+}
+
+type Adapter @entity {
+  id: ID!
+  staked: Int!
+}
+
+type StakedEvent @entity {
+  id: ID!
+  staker: Bytes! # address
+  adapter: Bytes! # address
+  strategy: Bytes! # address
+}
