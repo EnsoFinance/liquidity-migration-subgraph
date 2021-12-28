@@ -11,7 +11,7 @@ type Adapter @entity {
 
 type StakedEvent @entity {
   id: ID!
-  staker: Bytes! # address
-  adapter: Bytes! # address
-  strategy: Bytes! # address
+  staker: String!
+  adapter: String!
+  strategy: String!
 }
