@@ -15,3 +15,8 @@ type StakedEvent @entity {
   adapter: String!
   strategy: String!
 }
+
+type StrategyToken @entity {
+  id: ID!
+  amount: BigDecimal!
+}
