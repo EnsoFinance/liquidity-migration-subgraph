@@ -27,4 +27,4 @@ dataSources:
           handler: handleOwnershipTransferred
         - event: Staked(address,address,uint256,address)
           handler: handleStaked
-      file: ./src/mapping.ts
+      file: ./src/mappingV1.ts

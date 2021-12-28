@@ -3,14 +3,13 @@ import {
   OwnershipTransferred,
 } from "../generated/LiquidityMigration/LiquidityMigration";
 import { createStakedEvent } from "./entities/stakedEvent";
-import { Adapter } from "../generated/schema";
-import { adapters, adaptersNames } from "./constants";
-import { log } from "@graphprotocol/graph-ts";
+import { AdapterV1 } from "../generated/schema";
+import { adaptersV1, adaptersNames } from "./constants";
 
 export function handleStaked(event: Staked): void {
   createStakedEvent(event);
 
-  let adapter = Adapter.load(event.params.adapter.toHex());
+  let adapter = AdapterV1.load(event.params.adapter.toHex());
   if (adapter === null) {
     return;
   }
@@ -20,10 +19,10 @@ export function handleStaked(event: Staked): void {
 
 // This is the first event in the contract. It will be used to create Adapters entities
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {
-  for (let i = 0; i < adapters.length; i++) {
-    let adapter = Adapter.load(adapters[i]);
+  for (let i = 0; i < adaptersV1.length; i++) {
+    let adapter = AdapterV1.load(adaptersV1[i]);
     if (!adapter) {
-      adapter = new Adapter(adapters[i]);
+      adapter = new AdapterV1(adaptersV1[i]);
       adapter.name = adaptersNames[i];
       adapter.staked = 0;
       adapter.save();

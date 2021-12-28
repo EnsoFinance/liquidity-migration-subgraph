@@ -1,15 +1,9 @@
-export const IndexCoopAdapter = "0x9c9326c521895c78414bd3c2945e47afc4ef16cc";
-export const IndexedAdapter = "0x8f516c0fb0bcf44cfc8d42d60dad3e4cdb35ce26";
-export const PowerPoolAdapter = "0x0a883a62660328ead442eb6c2311668ba9c12e57";
-export const TokenSetAdapter = "0x5f2c716d912ce400a8a49fb87db722e8257257a7";
-export const DHedgeAdapter = "0xae6859311c341bac4e0bceca0242247c16718ff1";
-export const PieDaoAdapter = "0xe149b1f2ef564a289dc094215835f3c8df1695aa";
 export const LiquidityMigration = "0x0092DECCA5E2f26466289011ad41465763BeA4cE";
 export const ERC1155 = "0x3a1c88addeC56e725ba2a432bC89eeaA5D068753";
 export const Claimable = "0xE39d9712F3749b9663627331d9BCa15Ac69b6170";
 
-export let adapters = new Array<string>();
-adapters = [
+export let adaptersV1 = new Array<string>();
+adaptersV1 = [
   "0x9c9326c521895c78414bd3c2945e47afc4ef16cc",
   "0x8f516c0fb0bcf44cfc8d42d60dad3e4cdb35ce26",
   "0x0a883a62660328ead442eb6c2311668ba9c12e57",

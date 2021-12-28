@@ -4,7 +4,7 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --access-token 6223382f8a7d42a882fc7b445ef86624 --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ensofinance/enso-liquidity-migration",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ensofinance/enso-liquidity-migration",
     "create-local": "graph create --node http://localhost:8020/ ensofinance/enso-liquidity-migration",
     "remove-local": "graph remove --node http://localhost:8020/ ensofinance/enso-liquidity-migration",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 ensofinance/enso-liquidity-migration"
