@@ -14,10 +14,10 @@ adaptersV1 = [
 
 export let adaptersNames = new Array<string>();
 adaptersNames = [
-  "IndexCoop",
+  "IndexCoopAdapter",
   "IndexedAdapter",
   "PowerPoolAdapter",
-  "TokenSetAdapter",
+  "TokenSetsAdapter",
   "DHedgeAdapter",
   "PieDaoAdapter",
 ];

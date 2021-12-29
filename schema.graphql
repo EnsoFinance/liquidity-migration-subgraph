@@ -19,4 +19,10 @@ type StakedEvent @entity {
 type StrategyToken @entity {
   id: ID!
   amount: BigDecimal!
+  owner: User!
+}
+
+type User @entity {
+  id: ID!
+  stakedTokens: [StrategyToken!]! @derivedFrom(field: "owner")
 }
