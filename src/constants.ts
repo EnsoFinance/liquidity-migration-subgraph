@@ -5,6 +5,8 @@ export const ERC1155 = "0x3a1c88addeC56e725ba2a432bC89eeaA5D068753";
 export const Claimable = "0xE39d9712F3749b9663627331d9BCa15Ac69b6170";
 export const Coordinator = "0x6CD0df59370B38261E251Bd786B2f320595005d1";
 
+export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
 export let adaptersV1 = new Array<string>();
 adaptersV1 = [
   "0x9c9326c521895c78414bd3c2945e47afc4ef16cc",

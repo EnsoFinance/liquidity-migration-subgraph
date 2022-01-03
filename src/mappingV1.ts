@@ -5,8 +5,9 @@ import {
 import { createStakedEvent } from "./entities/stakedEvent";
 import { AdapterV1 } from "../generated/schema";
 import { adaptersV1, adaptersNames, Coordinator, ZERO_BI } from "./constants";
-import { ensureStakedToken } from "./entities/Token";
+import { ensureStakedToken } from "./entities/StakedToken";
 import { ensureUser } from "./entities/user";
+import { ensureToken } from "./entities/Token";
 
 export function handleStaked(event: Staked): void {
   // To avoid duplicates from the V2 migration, we filter the coorinator address
@@ -30,6 +31,8 @@ export function handleStaked(event: Staked): void {
   adapter.staked = adapter.staked + 1;
   adapter.save();
 
+  let token = ensureToken(event.params.strategy);
+
   let stakedTokenId =
     event.params.strategy.toHexString() +
     "-" +
@@ -39,6 +42,7 @@ export function handleStaked(event: Staked): void {
     event.params.amount.toBigDecimal()
   );
   strategyToken.owner = event.params.account.toHexString();
+  strategyToken.token = token.id;
   strategyToken.save();
 }
 
