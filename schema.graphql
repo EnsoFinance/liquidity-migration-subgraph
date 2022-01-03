@@ -14,15 +14,16 @@ type StakedEvent @entity {
   staker: String!
   adapter: String!
   strategy: String!
+  amount: BigDecimal!
 }
 
-type StrategyToken @entity {
-  id: ID!
+type StakedToken @entity {
+  id: ID! # strategy token address - owner address
   amount: BigDecimal!
   owner: User!
 }
 
 type User @entity {
   id: ID!
-  stakedTokens: [StrategyToken!]! @derivedFrom(field: "owner")
+  stakedTokens: [StakedToken!]! @derivedFrom(field: "owner")
 }

@@ -1,13 +1,13 @@
-import { Address, BigDecimal } from "@graphprotocol/graph-ts";
-import { StrategyToken } from "../../generated/schema";
+import { BigDecimal } from "@graphprotocol/graph-ts";
+import { StakedToken } from "../../generated/schema";
 
-export function ensureStrategyToken(address: Address): StrategyToken {
-  let token = StrategyToken.load(address.toHexString());
+export function ensureStakedToken(stakedTokenId: string): StakedToken {
+  let token = StakedToken.load(stakedTokenId);
   if (token) {
     return token;
   }
 
-  token = new StrategyToken(address.toHex());
+  token = new StakedToken(stakedTokenId);
   token.amount = BigDecimal.fromString("0");
   token.save();
 

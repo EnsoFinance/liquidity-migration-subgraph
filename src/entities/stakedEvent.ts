@@ -6,5 +6,6 @@ export function createStakedEvent(event: Staked): void {
   stakedEvent.staker = event.params.account.toHexString();
   stakedEvent.adapter = event.params.adapter.toHexString();
   stakedEvent.strategy = event.params.strategy.toHexString();
+  stakedEvent.amount = event.params.amount.toBigDecimal();
   stakedEvent.save();
 }

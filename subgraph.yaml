@@ -28,3 +28,30 @@ dataSources:
         - event: Staked(address,address,uint256,address)
           handler: handleStaked
       file: ./src/mappingV1.ts
+
+  - kind: ethereum/contract
+    name: LiquidityMigrationV2
+    network: mainnet
+    source:
+      address: "0x0c6D898ac945E493D25751Ea43BE2c8Beb881D8C"
+      abi: LiquidityMigration
+      startBlock: 13910225
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Created
+        - Migrated
+        - OwnershipTransferred
+        - Refunded
+        - Staked
+      abis:
+        - name: LiquidityMigration
+          file: ./abis/LiquidityMigration.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Staked(address,address,uint256,address)
+          handler: handleStaked
+      file: ./src/mappingV1.ts
