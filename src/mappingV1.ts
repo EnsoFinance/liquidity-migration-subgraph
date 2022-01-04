@@ -3,7 +3,7 @@ import {
   OwnershipTransferred,
 } from "../generated/LiquidityMigration/LiquidityMigration";
 import { createStakedEvent } from "./entities/stakedEvent";
-import { AdapterV1 } from "../generated/schema";
+import { Adapter } from "../generated/schema";
 import { adaptersV1, adaptersNames, Coordinator, ZERO_BI } from "./constants";
 import { ensureStakedToken } from "./entities/StakedToken";
 import { ensureUser } from "./entities/user";
@@ -25,7 +25,7 @@ export function handleStaked(event: Staked): void {
 
   ensureUser(event.params.account);
 
-  let adapter = AdapterV1.load(event.params.adapter.toHex());
+  let adapter = Adapter.load(event.params.adapter.toHex());
   if (adapter === null) {
     return;
   }
@@ -33,6 +33,10 @@ export function handleStaked(event: Staked): void {
   adapter.save();
 
   let token = ensureToken(event.params.strategy);
+  token.stakedAmount = token.stakedAmount.plus(
+    event.params.amount.toBigDecimal()
+  );
+  token.save();
 
   let stakedTokenId =
     event.params.strategy.toHexString() +
@@ -51,9 +55,9 @@ export function handleStaked(event: Staked): void {
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {
   ensureLiquidityMigration();
   for (let i = 0; i < adaptersV1.length; i++) {
-    let adapter = AdapterV1.load(adaptersV1[i]);
+    let adapter = Adapter.load(adaptersV1[i]);
     if (!adapter) {
-      adapter = new AdapterV1(adaptersV1[i]);
+      adapter = new Adapter(adaptersV1[i]);
       adapter.name = adaptersNames[i];
       adapter.staked = 0;
       adapter.save();

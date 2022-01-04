@@ -3,7 +3,7 @@ type LiquidityMigration @entity {
   usersCount: Int!
 }
 
-type AdapterV1 @entity {
+type Adapter @entity {
   id: ID!
   name: String!
   staked: Int!
@@ -31,6 +31,8 @@ type Token @entity {
   name: String!
   symbol: String!
   decimals: BigInt!
+
+  stakedAmount: BigDecimal!
 }
 
 type User @entity {

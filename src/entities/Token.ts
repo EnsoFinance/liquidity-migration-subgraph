@@ -1,4 +1,4 @@
-import { Address } from "@graphprotocol/graph-ts";
+import { Address, BigDecimal } from "@graphprotocol/graph-ts";
 import { Token } from "../../generated/schema";
 import {
   getTokenName,
@@ -16,6 +16,7 @@ export function ensureToken(address: Address): Token {
   token.symbol = getTokenSymbol(address);
   token.name = getTokenName(address);
   token.decimals = getTokenDecimals(address);
+  token.stakedAmount = BigDecimal.fromString("0");
   token.save();
 
   return token;
