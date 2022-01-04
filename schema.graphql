@@ -1,6 +1,6 @@
 type LiquidityMigration @entity {
   id: ID!
-  staked: Int!
+  usersCount: Int!
 }
 
 type AdapterV1 @entity {

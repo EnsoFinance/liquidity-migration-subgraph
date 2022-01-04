@@ -8,6 +8,7 @@ import { adaptersV1, adaptersNames, Coordinator, ZERO_BI } from "./constants";
 import { ensureStakedToken } from "./entities/StakedToken";
 import { ensureUser } from "./entities/user";
 import { ensureToken } from "./entities/Token";
+import { ensureLiquidityMigration } from "./entities/LiquidityMigration";
 
 export function handleStaked(event: Staked): void {
   // To avoid duplicates from the V2 migration, we filter the coorinator address
@@ -46,8 +47,9 @@ export function handleStaked(event: Staked): void {
   strategyToken.save();
 }
 
-// This is the first event in the contract. It will be used to create Adapters entities
+// This is the first event in the contract. It will be used to create Adapters and migration entities
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {
+  ensureLiquidityMigration();
   for (let i = 0; i < adaptersV1.length; i++) {
     let adapter = AdapterV1.load(adaptersV1[i]);
     if (!adapter) {

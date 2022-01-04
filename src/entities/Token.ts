@@ -1,4 +1,4 @@
-import { Address, log } from "@graphprotocol/graph-ts";
+import { Address } from "@graphprotocol/graph-ts";
 import { Token } from "../../generated/schema";
 import {
   getTokenName,
@@ -18,13 +18,5 @@ export function ensureToken(address: Address): Token {
   token.decimals = getTokenDecimals(address);
   token.save();
 
-  return token;
-}
-
-export function useToken(address: Address): Token {
-  let token = Token.load(address.toHexString());
-  if (token == null) {
-    log.critical("Token {} does not exist", [address.toHexString()]);
-  }
   return token;
 }
