@@ -1,8 +1,7 @@
-import { BigInt, Address, BigDecimal, log } from "@graphprotocol/graph-ts";
+import { BigInt, Address, log } from "@graphprotocol/graph-ts";
 import { ERC20 } from "../../generated/LiquidityMigration/ERC20";
 import { ERC20SymbolBytes } from "../../generated/LiquidityMigration/ERC20SymbolBytes";
 import { ERC20NameBytes } from "../../generated/LiquidityMigration/ERC20NameBytes";
-import { ZERO_ADDRESS } from "../constants";
 
 export function getTokenSymbol(address: Address): string {
   let contract = ERC20.bind(address);

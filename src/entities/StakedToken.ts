@@ -1,4 +1,4 @@
-import { BigDecimal } from "@graphprotocol/graph-ts";
+import { Address, BigDecimal } from "@graphprotocol/graph-ts";
 import { StakedToken } from "../../generated/schema";
 
 export function ensureStakedToken(stakedTokenId: string): StakedToken {
@@ -11,5 +11,10 @@ export function ensureStakedToken(stakedTokenId: string): StakedToken {
   token.amount = BigDecimal.fromString("0");
   token.save();
 
+  return token;
+}
+
+export function useStakedToken(id: string): StakedToken {
+  let token = StakedToken.load(id)!;
   return token;
 }

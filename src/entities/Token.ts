@@ -21,3 +21,8 @@ export function ensureToken(address: Address): Token {
 
   return token;
 }
+
+export function useToken(address: Address): Token {
+  let token = Token.load(address.toHexString())!;
+  return token;
+}

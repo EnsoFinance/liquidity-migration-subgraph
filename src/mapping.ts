@@ -1,13 +1,14 @@
 import {
   Staked,
   OwnershipTransferred,
+  Refunded,
 } from "../generated/LiquidityMigration/LiquidityMigration";
 import { createStakedEvent } from "./entities/stakedEvent";
 import { Adapter } from "../generated/schema";
 import { adaptersV1, adaptersNames, Coordinator, ZERO_BI } from "./constants";
-import { ensureStakedToken } from "./entities/StakedToken";
+import { ensureStakedToken, useStakedToken } from "./entities/StakedToken";
 import { ensureUser } from "./entities/user";
-import { ensureToken } from "./entities/Token";
+import { ensureToken, useToken } from "./entities/Token";
 import { ensureLiquidityMigration } from "./entities/LiquidityMigration";
 
 export function handleStaked(event: Staked): void {
@@ -63,4 +64,20 @@ export function handleOwnershipTransferred(event: OwnershipTransferred): void {
       adapter.save();
     }
   }
+}
+
+export function handleRefunded(event: Refunded): void {
+  let token = useToken(event.params.lp);
+  token.stakedAmount = token.stakedAmount.minus(
+    event.params.amount.toBigDecimal()
+  );
+  token.save();
+
+  let stakedTokenId =
+    event.params.lp.toHexString() + "-" + event.params.account.toHexString();
+  let strategyToken = useStakedToken(stakedTokenId);
+  strategyToken.amount = strategyToken.amount.minus(
+    event.params.amount.toBigDecimal()
+  );
+  strategyToken.save();
 }

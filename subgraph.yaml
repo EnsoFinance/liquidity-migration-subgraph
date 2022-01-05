@@ -33,7 +33,9 @@ dataSources:
           handler: handleOwnershipTransferred
         - event: Staked(address,address,uint256,address)
           handler: handleStaked
-      file: ./src/mappingV1.ts
+        - event: Refunded(address,uint256,address)
+          handler: handleRefunded
+      file: ./src/mapping.ts
 
   - kind: ethereum/contract
     name: LiquidityMigrationV2
@@ -66,4 +68,6 @@ dataSources:
           handler: handleOwnershipTransferred
         - event: Staked(address,address,uint256,address)
           handler: handleStaked
-      file: ./src/mappingV1.ts
+        - event: Refunded(address,uint256,address)
+          handler: handleRefunded
+      file: ./src/mapping.ts
