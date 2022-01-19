@@ -15,6 +15,22 @@ type StakedEvent @entity {
   adapter: String!
   strategy: String!
   amount: BigDecimal!
+  transactionFrom: String!
+}
+
+type FilteredStakedEvent @entity {
+  id: ID!
+  staker: String!
+  adapter: String!
+  strategy: String!
+  amount: BigDecimal!
+}
+
+type RefundedEvent @entity {
+  id: ID!
+  user: User!
+  amount: BigDecimal!
+  strategy: String!
 }
 
 type StakedToken @entity {

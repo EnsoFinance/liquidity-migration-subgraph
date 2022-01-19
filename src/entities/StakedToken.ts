@@ -18,3 +18,7 @@ export function useStakedToken(id: string): StakedToken {
   let token = StakedToken.load(id)!;
   return token;
 }
+
+export function createStakedTokenId(strategy:Address, account:Address): string {
+  return strategy.toHexString() + "-" + account.toHexString();
+}

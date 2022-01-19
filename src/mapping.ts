@@ -3,17 +3,21 @@ import {
   OwnershipTransferred,
   Refunded,
 } from "../generated/LiquidityMigration/LiquidityMigration";
-import { createStakedEvent } from "./entities/stakedEvent";
+import { createStakedEvent } from "./entities/StakedEvent";
 import { Adapter } from "../generated/schema";
-import { adaptersV1, adaptersNames, Coordinator, ZERO_BI } from "./constants";
-import { ensureStakedToken, useStakedToken } from "./entities/StakedToken";
+import { adaptersV1, adaptersNames, Migrator, ZERO_BI } from "./constants";
+import { createStakedTokenId, ensureStakedToken, useStakedToken } from "./entities/StakedToken";
 import { ensureUser } from "./entities/user";
 import { ensureToken, useToken } from "./entities/Token";
 import { ensureLiquidityMigration } from "./entities/LiquidityMigration";
+import { Address } from "@graphprotocol/graph-ts";
+import {createRefundedEvent} from "./entities/RefundEvent";
+import {createFilteredStakedEvent} from "./entities/FilteredStakeEvent";
 
 export function handleStaked(event: Staked): void {
-  // To avoid duplicates from the V2 migration, we filter the coorinator address
-  if (event.transaction.from.toHexString() === Coordinator) {
+  // To avoid duplicates from the V2 migration, we filter the coorinator address owner
+  if (event.transaction.from.equals(Address.fromString(Migrator))) {
+    createFilteredStakedEvent(event);
     return;
   }
 
@@ -33,16 +37,16 @@ export function handleStaked(event: Staked): void {
   adapter.staked = adapter.staked + 1;
   adapter.save();
 
+  let strategy = event.params.strategy
+  let account = event.params.account
+
   let token = ensureToken(event.params.strategy);
   token.stakedAmount = token.stakedAmount.plus(
     event.params.amount.toBigDecimal()
   );
   token.save();
 
-  let stakedTokenId =
-    event.params.strategy.toHexString() +
-    "-" +
-    event.params.account.toHexString();
+  let stakedTokenId = createStakedTokenId(strategy,account)
   let strategyToken = ensureStakedToken(stakedTokenId);
   strategyToken.amount = strategyToken.amount.plus(
     event.params.amount.toBigDecimal()
@@ -67,17 +71,25 @@ export function handleOwnershipTransferred(event: OwnershipTransferred): void {
 }
 
 export function handleRefunded(event: Refunded): void {
-  let token = useToken(event.params.lp);
+  createRefundedEvent(event);
+
+  let lp = event.params.lp
+  let account = event.params.account
+  let amount = event.params.amount
+
+  let token = useToken(lp)
   token.stakedAmount = token.stakedAmount.minus(
-    event.params.amount.toBigDecimal()
+    amount.toBigDecimal()
   );
   token.save();
+ 
 
-  let stakedTokenId =
-    event.params.lp.toHexString() + "-" + event.params.account.toHexString();
+  let stakedTokenId =createStakedTokenId(lp,account)  
   let strategyToken = useStakedToken(stakedTokenId);
+
   strategyToken.amount = strategyToken.amount.minus(
-    event.params.amount.toBigDecimal()
+    amount.toBigDecimal()
   );
+
   strategyToken.save();
 }

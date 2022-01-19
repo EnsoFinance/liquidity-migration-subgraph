@@ -3,7 +3,7 @@ import { BigInt } from "@graphprotocol/graph-ts";
 export const LiquidityMigration = "0x0092DECCA5E2f26466289011ad41465763BeA4cE";
 export const ERC1155 = "0x3a1c88addeC56e725ba2a432bC89eeaA5D068753";
 export const Claimable = "0xE39d9712F3749b9663627331d9BCa15Ac69b6170";
-export const Coordinator = "0x6CD0df59370B38261E251Bd786B2f320595005d1";
+export const Migrator = "0x007a8cff81a9fcca63e8a05acb41a8292f4b353e";
 
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
